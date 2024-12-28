@@ -1,0 +1,29 @@
+{
+  "mappings": {
+    "properties": {
+      "text": {
+        "type": "text"
+      },
+      "created_at": {
+        "type": "date",
+        "format": "EEE MMM dd HH:mm:ss Z yyyy"
+      },
+      "geo_coordinates": {
+        "type": "geo_point",
+        "null_value": 0,
+        "ignore_malformed":true
+      },
+      "hashtags": {
+        "type": "nested",
+        "properties": {
+          "text": {
+            "type": "keyword"
+          }
+        }
+      },
+      "sentiment": {
+        "type": "integer"
+      }
+    }
+  }
+}
