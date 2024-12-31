@@ -1,0 +1,15 @@
+[debug] Packaging C:\Users\dell\IdeaProjects\Twitter-Stream-Processing\spark-streaming\target\scala-2.12\spark-streaming_2.12-0.1.0-SNAPSHOT.jar ...
+[debug] Input file mappings:
+[debug] 	consumer
+[debug] 	  C:\Users\dell\IdeaProjects\Twitter-Stream-Processing\spark-streaming\target\scala-2.12\classes\consumer
+[debug] 	consumer\consumer$$typecreator1$1.class
+[debug] 	  C:\Users\dell\IdeaProjects\Twitter-Stream-Processing\spark-streaming\target\scala-2.12\classes\consumer\consumer$$typecreator1$1.class
+[debug] 	consumer\consumer$.class
+[debug] 	  C:\Users\dell\IdeaProjects\Twitter-Stream-Processing\spark-streaming\target\scala-2.12\classes\consumer\consumer$.class
+[debug] 	consumer\consumer.class
+[debug] 	  C:\Users\dell\IdeaProjects\Twitter-Stream-Processing\spark-streaming\target\scala-2.12\classes\consumer\consumer.class
+[debug] 	Producer$.class
+[debug] 	  C:\Users\dell\IdeaProjects\Twitter-Stream-Processing\spark-streaming\target\scala-2.12\classes\Producer$.class
+[debug] 	Producer.class
+[debug] 	  C:\Users\dell\IdeaProjects\Twitter-Stream-Processing\spark-streaming\target\scala-2.12\classes\Producer.class
+[debug] Done packaging.

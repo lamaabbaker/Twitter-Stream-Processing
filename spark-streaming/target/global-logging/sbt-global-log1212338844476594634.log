@@ -1,0 +1,9 @@
+[debug] > Exec(compile, None, None)
+[debug] Evaluating tasks: Compile / compile
+[debug] Running task... Cancel: Signal, check cycles: false, forcegc: true
+[info] compiling 2 Scala sources to C:\Users\dell\IdeaProjects\Twitter-Stream-Processing\spark-streaming\target\scala-2.12\classes ...
+[info] Non-compiled module 'compiler-bridge_2.12' for Scala 2.12.18. Compiling...
+[info]   Compilation completed in 13.454s.
+[info] done compiling
+[success] Total time: 19 s, completed Dec 30, 2024 7:26:05 PM
+[debug] > Exec(idea-shell, None, None)
