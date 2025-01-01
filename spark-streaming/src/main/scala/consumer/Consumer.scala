@@ -5,6 +5,7 @@ import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types._
 import com.johnsnowlabs.nlp.pretrained.PretrainedPipeline
 import org.apache.spark.sql.streaming.Trigger
+import io.github.cdimascio.dotenv.Dotenv
 
 
 
@@ -12,21 +13,26 @@ object Consumer {
 
   def main(args: Array[String]): Unit = {
 
+    val dotenv = Dotenv.load()
+    val esUser = dotenv.get("ES_USER")
+    val esPassword = dotenv.get("ES_PASSWORD")
+    val esSslCert = dotenv.get("ES_SSL_CERT")
+
     val sparkConf = new SparkConf ()
     .setAppName ("TweetProcessor")
     .setMaster ("local[*]")
 
 
     val spark = SparkSession.builder
-    .config (sparkConf)
-    .config ("spark.es.nodes", "localhost")
-    .config ("spark.es.port", "9200")
-    .config ("spark.es.net.http.auth.user", " ")
-    .config ("spark.es.net.http.auth.pass", " ")
-    .config ("spark.es.net.ssl", "true")
-    .config ("spark.es.net.ssl.cert", " ")
-    .config ("spark.es.nodes.wan.only", "true")
-  .getOrCreate ()
+      .config(sparkConf)
+      .config("spark.es.nodes", "localhost")
+      .config("spark.es.port", "9200")
+      .config("spark.es.net.http.auth.user", esUser)
+      .config("spark.es.net.http.auth.pass", esPassword)
+      .config("spark.es.net.ssl", "true")
+      .config("spark.es.net.ssl.cert", esSslCert)
+      .config("spark.es.nodes.wan.only", "true")
+      .getOrCreate()
 
     import spark.implicits._
 
@@ -92,7 +98,6 @@ object Consumer {
     val tweetsWithSentiment = tweets.withColumn ("sentiment", analyzeSentiment ($"text") )
 
 
-    println("before writing")
 
     // Write the processed data to Elasticsearch
     tweetsWithSentiment.writeStream

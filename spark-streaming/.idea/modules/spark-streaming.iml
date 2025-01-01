@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id="root [file:/C:/Users/areen/IdeaProjects/Twitter-Stream-Processing/spark-streaming/]" external.linked.project.path="$MODULE_DIR$/../.." external.root.project.path="$MODULE_DIR$/../.." external.system.id="SBT" type="JAVA_MODULE" version="4">
+<module external.linked.project.id="root [file:/C:/Users/ysh6/Desktop/big%20data%20proj/Twitter-Stream-Processing/spark-streaming/]" external.linked.project.path="$MODULE_DIR$/../.." external.root.project.path="$MODULE_DIR$/../.." external.system.id="SBT" type="JAVA_MODULE" version="4">
   <component name="DisplayModuleName">
     <option name="name" value="spark-streaming" />
   </component>
@@ -87,12 +87,9 @@
     <orderEntry type="library" name="sbt: com.google.protobuf:protobuf-java:3.21.12:jar" level="project" />
     <orderEntry type="library" name="sbt: com.google.re2j:re2j:1.6:jar" level="project" />
     <orderEntry type="library" name="sbt: com.johnsnowlabs.nlp:jsl-llamacpp-cpu_2.12:0.1.4:jar" level="project" />
-    <orderEntry type="library" name="sbt: com.johnsnowlabs.nlp:jsl-llamacpp-silicon_2.12:0.1.4:jar" level="project" />
     <orderEntry type="library" name="sbt: com.johnsnowlabs.nlp:jsl-openvino-cpu_2.12:0.1.0:jar" level="project" />
-    <orderEntry type="library" name="sbt: com.johnsnowlabs.nlp:spark-nlp-silicon_2.12:5.5.1:jar" level="project" />
     <orderEntry type="library" name="sbt: com.johnsnowlabs.nlp:spark-nlp_2.12:5.5.1:jar" level="project" />
     <orderEntry type="library" name="sbt: com.johnsnowlabs.nlp:tensorflow-cpu_2.12:0.4.4:jar" level="project" />
-    <orderEntry type="library" name="sbt: com.johnsnowlabs.nlp:tensorflow-m1_2.12:0.4.4:jar" level="project" />
     <orderEntry type="library" name="sbt: com.microsoft.onnxruntime:onnxruntime:1.19.2:jar" level="project" />
     <orderEntry type="library" name="sbt: com.navigamez:greex:1.0:jar" level="project" />
     <orderEntry type="library" name="sbt: com.ning:compress-lzf:1.1.2:jar" level="project" />
@@ -119,6 +116,7 @@
     <orderEntry type="library" name="sbt: io.dropwizard.metrics:metrics-jmx:4.2.15:jar" level="project" />
     <orderEntry type="library" name="sbt: io.dropwizard.metrics:metrics-json:4.2.15:jar" level="project" />
     <orderEntry type="library" name="sbt: io.dropwizard.metrics:metrics-jvm:4.2.15:jar" level="project" />
+    <orderEntry type="library" name="sbt: io.github.cdimascio:java-dotenv:5.2.2:jar" level="project" />
     <orderEntry type="library" name="sbt: io.grpc:grpc-alts:1.53.0:jar" level="project" />
     <orderEntry type="library" name="sbt: io.grpc:grpc-api:1.53.0:jar" level="project" />
     <orderEntry type="library" name="sbt: io.grpc:grpc-auth:1.53.0:jar" level="project" />
@@ -261,6 +259,8 @@
     <orderEntry type="library" name="sbt: org.glassfish.jersey.core:jersey-server:2.36:jar" level="project" />
     <orderEntry type="library" name="sbt: org.glassfish.jersey.inject:jersey-hk2:2.36:jar" level="project" />
     <orderEntry type="library" name="sbt: org.javassist:javassist:3.25.0-GA:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.jetbrains.kotlin:kotlin-stdlib-common:1.4.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.jetbrains.kotlin:kotlin-stdlib:1.4.0:jar" level="project" />
     <orderEntry type="library" name="sbt: org.jetbrains:annotations:24.1.0:jar" level="project" />
     <orderEntry type="library" name="sbt: org.json4s:json4s-ast_2.12:3.7.0-M11:jar" level="project" />
     <orderEntry type="library" name="sbt: org.json4s:json4s-core_2.12:3.7.0-M11:jar" level="project" />
