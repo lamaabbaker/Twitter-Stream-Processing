@@ -1,6 +1,9 @@
 {
   "mappings": {
     "properties": {
+      "tweet_id": { 
+        "type": "keyword"  
+      },
       "text": {
         "type": "text"
       },
@@ -9,17 +12,10 @@
         "format": "EEE MMM dd HH:mm:ss Z yyyy"
       },
       "geo_coordinates": {
-        "type": "geo_point",
-        "null_value": 0,
-        "ignore_malformed":true
+        "type": "geo_point"
       },
       "hashtags": {
-        "type": "nested",
-        "properties": {
-          "text": {
-            "type": "keyword"
-          }
-        }
+        "type": "keyword"
       },
       "sentiment": {
         "type": "integer"
