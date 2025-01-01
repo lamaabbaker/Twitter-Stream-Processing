@@ -20,11 +20,13 @@ lazy val root = (project in file("."))
       "org.apache.kafka" % "kafka-clients" % "3.5.1",
 
       // Spark NLP for sentiment analysis
-      "com.johnsnowlabs.nlp" %% "spark-nlp-silicon" % "5.5.1",
       "com.johnsnowlabs.nlp" %% "spark-nlp" % "5.5.1",
 
       // Elasticsearch
-      "org.elasticsearch" %% "elasticsearch-spark-30" % "8.16.0"
+      "org.elasticsearch" %% "elasticsearch-spark-30" % "8.16.0",
+
+      // Dot env
+      "io.github.cdimascio" % "java-dotenv" % "5.2.2"
 
     )
   )
