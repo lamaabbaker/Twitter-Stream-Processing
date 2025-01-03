@@ -1,9 +1,6 @@
 {
   "mappings": {
     "properties": {
-      "tweet_id": { 
-        "type": "keyword"  
-      },
       "text": {
         "type": "text"
       },
@@ -19,6 +16,12 @@
       },
       "sentiment": {
         "type": "integer"
+      },
+      "tweet_source": {
+        "type": "keyword"
+      },
+      "language": {
+        "type": "keyword"
       }
     }
   }
