@@ -44,10 +44,9 @@ Twitter Stream Processing Pipeline that is designed to stream, process, store, a
      elasticsearch.bat
      ```
    - Wait for it to load, then open `localhost:9200`. make sure you see the expected JSON output
-   - Create the index and apply mapping:
-     ```bash
-     curl 
-     ```
+   - Create the index and apply the mapping in Kibana DevTools, Postman or the like.
+   -  Mapping is found inside `index-mapping.json` in the `Elasticsearch` directory.
+
 3. **Create .env file**:
    - Create a new `.env` file inside `spark-streaming` directory. Add to it variables as shown in `.env.example` and give them values for your elasticsearch username, password and path to the http_ca.crt certificate file - like: "C:\elasticsearch-8.16.1\config\certs\http_ca.crt".
 
@@ -64,3 +63,31 @@ Twitter Stream Processing Pipeline that is designed to stream, process, store, a
    - The producer reads tweets from `data/boulder_flood_geolocated_tweets.json` and sends them to the Kafka topic.
    - The consumer reads tweets from Kafka, processes them, and stores the results in Elasticsearch.
 
+---
+
+### Details of Each Component:
+1. **Producer**:
+   - Receives a continuous stream of tweets. 
+   - Creates a Kafka topic for tweet ingestion. 
+   - Stores the incoming tweet stream into the Kafka topic.
+
+2. **Consumer**:
+   - Reads incoming tweets from Kafka topic.
+   - Process tweets so that they are searchable over text, time and space.
+   - Extract hashtags and store them separately.
+   - Preform Sentiment Analysis to on each tweet based on text using Spark NLP.
+   - Writes the processed data to Elasticsearch.
+
+3. **Elasticsearch**:
+   - Use Elasticsearch as the storage engine for processed tweets. 
+   - Design an appropriate mapping for geo-coordinates, timestamps, and text. 
+
+4. **Kibana Dashboard**:
+   - Visualizes tweets on a map, trends over time, and sentiment distribution.
+   - Provide an input field asking a user to enter a keyword.
+   - Use Kibana to create visualizations and dashboards for:
+       -  Tweets containing that keyword displayed on a map based on geo-coordinates. 
+       -  Temporal trend diagrams of tweets over time using aggregations (hourly and daily). 
+       -  Sentiment analysis gauge reflecting average sentiment for tweets over a period of time. 
+
+---
