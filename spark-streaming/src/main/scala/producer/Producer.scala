@@ -16,6 +16,7 @@ object Producer {
     // Creating Kafka Producer
     val producer = new KafkaProducer[String, String](props)
     val topic = "tweets"
+    var tweetCount = 0
 
     val filePath = "data/boulder_flood_geolocated_tweets.json"
 
@@ -26,11 +27,11 @@ object Producer {
       // Send each line directly as a Kafka message
       for (line <- lines) {
         try {
-          val record = new ProducerRecord[String, String](topic, null, line)
+          val record = new ProducerRecord[String, String](topic, s"key${tweetCount}", line)
           producer.send(record)
           println(s"Sent raw JSON to Kafka topic: $topic")
-
-
+          tweetCount += 1
+          // Delay sending tweets to simulate a real-time tweet generator (60 tweets per second)
           Thread.sleep(16)
         } catch {
           case e: Exception =>
@@ -43,5 +44,5 @@ object Producer {
         e.printStackTrace()
     } finally {
       producer.close()
-    }
+     }
   }}
