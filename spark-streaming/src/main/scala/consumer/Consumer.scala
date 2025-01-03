@@ -13,6 +13,7 @@ object Consumer {
 
   def main(args: Array[String]): Unit = {
 
+    // Load environment variables for Elasticsearch
     val dotenv = Dotenv.load()
     val esUser = dotenv.get("ES_USER")
     val esPassword = dotenv.get("ES_PASSWORD")
@@ -27,10 +28,10 @@ object Consumer {
       .config(sparkConf)
       .config("spark.es.nodes", "localhost")
       .config("spark.es.port", "9200")
-      .config("spark.es.net.http.auth.user", esUser)
-      .config("spark.es.net.http.auth.pass", esPassword)
-      .config("spark.es.net.ssl", "true")
-      .config("spark.es.net.ssl.cert", esSslCert)
+      .config("spark.es.net.http.auth.user", esUser) // Elasticsearch username
+      .config("spark.es.net.http.auth.pass", esPassword) // Elasticsearch password
+      .config("spark.es.net.ssl", "true") // Enable SSL/TLS if Elasticsearch is secured with HTTPS
+      .config("spark.es.net.ssl.cert", esSslCert) // Path to your certificate
       .config("spark.es.nodes.wan.only", "true")
       .getOrCreate()
 
@@ -39,6 +40,7 @@ object Consumer {
     val kafkaBootstrapServers = "localhost:9092"
     val kafkaTopic = "tweets"
 
+    // Define the schema for tweets
     val tweetSchema = StructType (Seq (
     StructField ("created_at", StringType, nullable = true),
     StructField ("id", LongType, nullable = true),
@@ -60,7 +62,9 @@ object Consumer {
     StructField ("coordinates", StructType (Seq (
     StructField ("type", StringType, nullable = true),
     StructField ("coordinates", ArrayType (DoubleType), nullable = true)
-    ) ), nullable = true)
+    ) ), nullable = true),
+    StructField("lang", StringType, nullable = true),
+    StructField("source", StringType, nullable = false),
     ) )
 
 
@@ -68,7 +72,7 @@ object Consumer {
   .format ("kafka")
   .option ("kafka.bootstrap.servers", kafkaBootstrapServers)
   .option ("subscribe", kafkaTopic)
-  .option ("startingOffsets", "earliest")
+  .option ("startingOffsets", "latest")
   .load ()
 
     val tweets = rawTweetsStream
@@ -78,9 +82,11 @@ object Consumer {
     $"json_value.text",
     $"json_value.id_str".alias ("tweet_id"),
     $"json_value.created_at",
+    $"json_value.lang".alias("language"),
     $"json_value.coordinates.coordinates".alias ("geo_coordinates"),
-    transform ($"json_value.entities.hashtags", h => h.getField ("text") ).alias ("hashtags")
-    )
+    transform ($"json_value.entities.hashtags", h => h.getField ("text") ).alias ("hashtags"),
+    expr("regexp_extract(json_value.source, '>(.*?)<', 1) as tweet_source"),
+  )
 
 
 
@@ -95,8 +101,11 @@ object Consumer {
   }
   })
 
-    val tweetsWithSentiment = tweets.withColumn ("sentiment", analyzeSentiment ($"text") )
-
+    // Only run sentiment analysis on English text, for non-English text, assign a neutral sentiment
+    val tweetsWithSentiment = tweets.withColumn("sentiment",
+      when($"language" === "en", analyzeSentiment($"text"))
+        .otherwise(lit(0))
+    )
 
 
     // Write the processed data to Elasticsearch
