@@ -1,0 +1,11 @@
+[debug] > Exec(compile, None, None)
+[debug] Evaluating tasks: Compile / compile
+[debug] Running task... Cancel: Signal, check cycles: false, forcegc: true
+[info] compiling 2 Scala sources to C:\Users\dell\IdeaProjects\Twitter-Stream-Processing\spark-streaming\target\scala-2.12\classes ...
+[info] downloading https://repo1.maven.org/maven2/org/scala-sbt/compiler-bridge_2.12/1.10.7/compiler-bridge_2.12-1.10.7-sources.jar
+[info] downloaded https://repo1.maven.org/maven2/org/scala-sbt/compiler-bridge_2.12/1.10.7/compiler-bridge_2.12-1.10.7-sources.jar
+[info] Non-compiled module 'compiler-bridge_2.12' for Scala 2.12.17. Compiling...
+[info]   Compilation completed in 25.277s.
+[info] done compiling
+[success] Total time: 36 s, completed Dec 30, 2024 2:20:39 PM
+[debug] > Exec(idea-shell, None, None)

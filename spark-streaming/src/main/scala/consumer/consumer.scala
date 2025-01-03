@@ -1,5 +1,0 @@
-package consumer
-
-object consumer {
-
-}
