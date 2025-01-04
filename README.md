@@ -25,24 +25,45 @@ Twitter Stream Processing Pipeline that is designed to stream, process, store, a
 1. **Set Up Kafka**:
 - Download and install Kafka. Write the following commands in the root Kafka folder:
    - Start Zookeeper:
-     ```bash
-     .\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
-     ```
+     - For Windows: 
+         ```bash
+         .\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+         ```
+      - For MacOS: 
+         ```bash
+         ./bin/zookeeper-server-start.sh ./config/zookeeper.properties
+         ```
+   - Start the Kafka server:
+      - For Windows: 
+         ```bash
+         .\bin\windows\kafka-server-start.bat .\config\server.properties
+         ```
+      - For MacOS: 
+         ```bash
+         ./bin/kafka-server-start.sh ./config/server.properties
+         ```
    - Create the Kafka topic:
-     ```bash
-     .\bin\windows\kafka-server-start.bat .\config\server.properties
-     ```
-   - Create the Kafka topic:
-     ```bash
-     .\bin\windows\kafka-topics.bat --create --topic tweets --bootstrap-server localhost:9092
-     ```
+      - For Windows: 
+         ```bash
+         .\bin\windows\kafka-topics.bat --create --topic tweets --bootstrap-server localhost:9092
+         ```
+      - For MacOS: 
+         ```bash
+         ./bin/kafka-topics.sh --create --topic tweets --bootstrap-server localhost:9092
+         ```
+         
      
 2. **Set Up Elasticsearch**:
    - Download and install Elasticsearch. Write the following command inside the bin folder:
    - Start Elasticsearch:
-     ```bash
-     elasticsearch.bat
-     ```
+     - For Windows: 
+         ```bash
+         elasticsearch.bat
+         ```
+      - For MacOS: 
+         ```bash
+         ./elasticsearch
+         ```
    - Wait for it to load, then open `localhost:9200`. make sure you see the expected JSON output
    - Create the index and apply the mapping in Kibana DevTools, Postman or the like.
    -  Mapping is found inside `index-mapping.json` in the `Elasticsearch` directory.
@@ -52,9 +73,14 @@ Twitter Stream Processing Pipeline that is designed to stream, process, store, a
 
 4. **Set up Kibana**:
    - Start Kibana. Write the following command inside the bin folder:
-     ```bash
-     kibana.bat
-     ```
+     - For Windows: 
+         ```bash
+         kibana.bat
+         ```
+      - For MacOS: 
+         ```bash
+         ./kibana
+         ```
    - Wait for it to load, then open `localhost:5601`. It may take some time.
    - When open, enter your Elasticsearch username and password.
 
@@ -62,6 +88,13 @@ Twitter Stream Processing Pipeline that is designed to stream, process, store, a
    - Navigate to the `spark-streaming` directory and run both `Producer` and `Consumer` simultaneously using a compound run configuration. Here:
    - The producer reads tweets from `data/boulder_flood_geolocated_tweets.json` and sends them to the Kafka topic.
    - The consumer reads tweets from Kafka, processes them, and stores the results in Elasticsearch.
+  
+         *Note: Make sure you add your Elasticsearch certificate is added to the JVM Trustore, otherwise the code will no be able to detect Elasticsearch. You can do so by           running the following command:*
+       ```bash
+       keytool -importcert -alias elasticsearch-cert -file "<path_to_certificate_file>" -keystore "<path_to_jvm_truststore>" -storepass <truststore_password>
+       ```
+
+5. **Import Dashboard in Kibana**:
 
 ---
 
