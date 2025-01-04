@@ -115,9 +115,9 @@ object Consumer {
     tweetsWithSentiment.writeStream
       .format ("org.elasticsearch.spark.sql")
       .option ("es.nodes", "localhost:9200")
-      .option ("es.resource", "tweets")
+      .option ("es.resource", "full_tweet_data")
       .option ("es.mapping.id", "tweet_id")
-      .option ("checkpointLocation", "checkpoint100")
+      .option ("checkpointLocation", "checkpoint5")
       .trigger (Trigger.ProcessingTime ("10 seconds") )
       .start ()
       .awaitTermination ()
