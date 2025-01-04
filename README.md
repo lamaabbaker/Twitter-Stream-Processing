@@ -89,12 +89,24 @@ Twitter Stream Processing Pipeline that is designed to stream, process, store, a
    - The producer reads tweets from `data/boulder_flood_geolocated_tweets.json` and sends them to the Kafka topic.
    - The consumer reads tweets from Kafka, processes them, and stores the results in Elasticsearch.
   
-         *Note: Make sure you add your Elasticsearch certificate is added to the JVM Trustore, otherwise the code will no be able to detect Elasticsearch. You can do so by           running the following command:*
+       - Note: Make sure you add your Elasticsearch certificate is added to the JVM Trustore, otherwise the code will not be able to detect Elasticsearch. You can do so by running the following command: (The default <truststore_password> is `changeit`)
        ```bash
        keytool -importcert -alias elasticsearch-cert -file "<path_to_certificate_file>" -keystore "<path_to_jvm_truststore>" -storepass <truststore_password>
        ```
 
 5. **Import Dashboard in Kibana**:
+  - Once Kibana is started, follow these steps to import the provided dashboard:
+
+    - In the Kibana interface, click on the "Management" menu in the left sidebar.
+    - Under the "Stack Management" section, select "Saved Objects".
+    - Click on the "Import" button.
+    - Choose the provided dashboard JSON file (e.g., dashboard.json) from your local system.
+    - If prompted to overwrite existing objects, select the appropriate option based on your preference.
+
+    - Verify the Import:
+    - After the import is successful, navigate to the "Dashboards" section in Kibana to view the imported dashboard.
+    - Update Index Patterns (if needed):
+        - Go to "Stack Management" > "Index Patterns", and ensure the required index pattern is configured.
 
 ---
 
