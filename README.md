@@ -9,18 +9,40 @@ Twitter Stream Processing Pipeline that is designed to stream, process, store, a
 - **Visualization**: Displays visualizations with maps, trend diagrams, and sentiment gauges.
 
 ---
+![Project Pipeline Figure]()
+
+---
 
 ## Installation and Setup Guide
 ### Prerequisites
 - **Requirements**:
   - Java 8+
-  - Spark 3.5+
-  - Scala 2.12+
-  - Apache Kafka 2.8+
-  - Apache Spark 3.3+
-  - Elasticsearch 8.0+
-  - Kibana 8.0+
- 
+  - Spark 3.5
+  - Scala 2.12
+  - Apache Kafka 3.5.1
+  - Elasticsearch 8.16.1
+  - Kibana 8.16.1
+
+### Installation
+- Step 1: Install Kafka
+  - Download Kafka:
+    - Visit the [Kafka](https://kafka.apache.org) downloads page.
+    - Install the Kafka 3.5.1 version for Scala 2.12.
+    - Extract the downloaded file to a directory (`e.g., C:/kafka`).  
+    - Ensure Java is installed and set up in your environment variables (JAVA_HOME).
+
+- Step 2: Install Elasticsearch
+  - Download Elasticsearch:
+    - Visit the [Elasticsearch](https://www.elastic.co/downloads/elasticsearch) downloads page.
+    - Install the 8.16.1 Elasticsearch version.
+    - Extract the downloaded file to a directory (`e.g., C:/elasticsearch`).
+
+- Step 3: Install Kibana
+  - Download Elasticsearch:
+    - Visit the [Kibana](https://www.elastic.co/downloads/kibana) downloads page.
+    - Install the 8.16.1 Kibana version.
+    - Extract the downloaded file to a directory (`e.g., C:/kibana`).
+       
 ### How to run the project:
 1. **Set Up Kafka**:
 - Download and install Kafka. Write the following commands in the root Kafka folder:
@@ -112,7 +134,7 @@ Twitter Stream Processing Pipeline that is designed to stream, process, store, a
 
 ### Details of Each Component:
 1. **Producer**:
-   - Receives a continuous stream of tweets. 
+   - Creates a simulated tweet generator. 
    - Creates a Kafka topic for tweet ingestion. 
    - Stores the incoming tweet stream into the Kafka topic.
 
