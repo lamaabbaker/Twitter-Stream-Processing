@@ -160,3 +160,5 @@ Twitter Stream Processing Pipeline that is designed to stream, process, store, a
        -  Sentiment analysis gauge reflecting average sentiment for tweets over a period of time. 
 
 ---
+
+[Our Trello Board](https://trello.com/invite/b/675c89e46e4bdf5fca465ddf/ATTId540b9c527b529a4db69e6daa71c19e17A36E1FF/big-data)
