@@ -20,8 +20,8 @@ object Consumer {
     val esSslCert = dotenv.get("ES_SSL_CERT")
 
     val sparkConf = new SparkConf ()
-    .setAppName ("TweetProcessor")
-    .setMaster ("local[*]")
+      .setAppName ("TweetProcessor")
+      .setMaster ("local[*]")
 
 
     val spark = SparkSession.builder
@@ -39,67 +39,70 @@ object Consumer {
 
     val kafkaBootstrapServers = "localhost:9092"
     val kafkaTopic = "tweets"
+    val kafkaGroupId = "tweet-group"
 
     // Define the schema for tweets
     val tweetSchema = StructType (Seq (
-    StructField ("created_at", StringType, nullable = true),
-    StructField ("id", LongType, nullable = true),
-    StructField ("id_str", StringType, nullable = true),
-    StructField ("text", StringType, nullable = true),
-    StructField ("truncated", BooleanType, nullable = true),
-    StructField ("entities", StructType (Seq (
-    StructField ("hashtags", ArrayType (StructType (Seq (
-    StructField ("text", StringType, nullable = true)
-    ) ) ), nullable = true)
-    ) ), nullable = true),
-    StructField ("geo", StructType (Seq (
-    StructField ("coordinates", ArrayType (DoubleType), nullable = true)
-    ) ), nullable = true),
-    StructField ("place", StructType (Seq (
-    StructField ("coordinates", ArrayType (ArrayType (ArrayType (DoubleType) ) ), nullable = true),
-    StructField ("type", StringType, nullable = true)
-    ) ), nullable = true),
-    StructField ("coordinates", StructType (Seq (
-    StructField ("type", StringType, nullable = true),
-    StructField ("coordinates", ArrayType (DoubleType), nullable = true)
-    ) ), nullable = true),
-    StructField("lang", StringType, nullable = true),
-    StructField("source", StringType, nullable = false),
+      StructField ("created_at", StringType, nullable = true),
+      StructField ("id", LongType, nullable = true),
+      StructField ("id_str", StringType, nullable = true),
+      StructField ("text", StringType, nullable = true),
+      StructField ("truncated", BooleanType, nullable = true),
+      StructField ("entities", StructType (Seq (
+        StructField ("hashtags", ArrayType (StructType (Seq (
+          StructField ("text", StringType, nullable = true)
+        ) ) ), nullable = true)
+      ) ), nullable = true),
+      StructField ("geo", StructType (Seq (
+        StructField ("coordinates", ArrayType (DoubleType), nullable = true)
+      ) ), nullable = true),
+      StructField ("place", StructType (Seq (
+        StructField ("coordinates", ArrayType (ArrayType (ArrayType (DoubleType) ) ), nullable = true),
+        StructField ("type", StringType, nullable = true)
+      ) ), nullable = true),
+      StructField ("coordinates", StructType (Seq (
+        StructField ("type", StringType, nullable = true),
+        StructField ("coordinates", ArrayType (DoubleType), nullable = true)
+      ) ), nullable = true),
+      StructField("lang", StringType, nullable = true),
+      StructField("source", StringType, nullable = false),
     ) )
 
 
     val rawTweetsStream = spark.readStream
-  .format ("kafka")
-  .option ("kafka.bootstrap.servers", kafkaBootstrapServers)
-  .option ("subscribe", kafkaTopic)
-  .option ("startingOffsets", "latest")
-  .load ()
+      .format ("kafka")
+      .option ("kafka.bootstrap.servers", kafkaBootstrapServers)
+      .option ("subscribe", kafkaTopic)
+      .option ("startingOffsets", "latest")
+      .option("group.id", kafkaGroupId)
+      .option("kafkaConsumer.pollTimeoutMs", "200000")
+      .load ()
 
     val tweets = rawTweetsStream
-  .selectExpr ("CAST(value AS STRING) as json_value")
-  .withColumn ("json_value", from_json ($"json_value", tweetSchema) )
-  .select (
-    $"json_value.text",
-    $"json_value.id_str".alias ("tweet_id"),
-    $"json_value.created_at",
-    $"json_value.lang".alias("language"),
-    $"json_value.coordinates.coordinates".alias ("geo_coordinates"),
-    transform ($"json_value.entities.hashtags", h => h.getField ("text") ).alias ("hashtags"),
-    expr("regexp_extract(json_value.source, '>(.*?)<', 1) as tweet_source"),
-  )
+      .selectExpr ("CAST(value AS STRING) as json_value")
+      .withColumn ("json_value", from_json ($"json_value", tweetSchema) )
+      .select (
+        $"json_value.text",
+        $"json_value.id_str".alias ("tweet_id"),
+        $"json_value.created_at",
+        $"json_value.lang".alias("language"),
+        $"json_value.coordinates.coordinates".alias ("geo_coordinates"),
+        transform ($"json_value.entities.hashtags", h => h.getField ("text") ).alias ("hashtags"),
+        expr("regexp_extract(json_value.source, '>(.*?)<', 1) as tweet_source"),
+      )
 
 
 
     val sentimentPipeline = PretrainedPipeline ("analyze_sentiment", lang = "en")
 
     val analyzeSentiment = udf ((text: String) => {
-    val annotation = sentimentPipeline.annotate (text)
-    annotation ("sentiment").headOption match {
-    case Some ("positive") => 1
-    case Some ("negative") => - 1
-    case _ => 0
-  }
-  })
+      val annotation = sentimentPipeline.annotate (text)
+      annotation ("sentiment").headOption match {
+        case Some ("positive") => 1
+        case Some ("negative") => - 1
+        case _ => 0
+      }
+    })
 
     // Only run sentiment analysis on English text, for non-English text, assign a neutral sentiment
     val tweetsWithSentiment = tweets.withColumn("sentiment",
@@ -114,12 +117,10 @@ object Consumer {
       .option ("es.nodes", "localhost:9200")
       .option ("es.resource", "tweets")
       .option ("es.mapping.id", "tweet_id")
-      .option ("checkpointLocation", "checkpoint")
+      .option ("checkpointLocation", "checkpoint100")
       .trigger (Trigger.ProcessingTime ("10 seconds") )
       .start ()
       .awaitTermination ()
 
   }
 }
-
-
