@@ -9,7 +9,7 @@ Twitter Stream Processing Pipeline that is designed to stream, process, store, a
 - **Visualization**: Displays visualizations with maps, trend diagrams, and sentiment gauges.
 
 ---
-![Project Pipeline Figure]()
+![Project Pipeline Figure](./imgs/workflow.png)
 
 ---
 
@@ -42,7 +42,9 @@ Twitter Stream Processing Pipeline that is designed to stream, process, store, a
     - Visit the [Kibana](https://www.elastic.co/downloads/kibana) downloads page.
     - Install the 8.16.1 Kibana version.
     - Extract the downloaded file to a directory (`e.g., C:/kibana`).
-       
+
+---
+
 ### How to run the project:
 1. **Set Up Kafka**:
 - Download and install Kafka. Write the following commands in the root Kafka folder:
